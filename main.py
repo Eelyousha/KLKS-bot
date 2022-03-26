@@ -6,21 +6,12 @@ vk_session = vk_api.VkApi(token=config_values["BOT_TOKEN"])
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 longpoll = VkBotLongPoll(vk_session, config_values["BOT_ID"])
 
-from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from vk_api.utils import get_random_id
-from vk_api.longpoll import VkLongPoll, VkEventType
+from vk_api.longpoll import VkLongPoll
 
 vk = vk_session.get_api()
 Lslongpoll = VkLongPoll(vk_session)
 Lsvk = vk_session.get_api()
-
-keyboard = VkKeyboard(one_time=True)
-keyboard.add_button('Привет', color=VkKeyboardColor.NEGATIVE)
-keyboard.add_button('Клавиатура', color=VkKeyboardColor.POSITIVE)
-keyboard.add_line()
-keyboard.add_location_button()
-keyboard.add_line()
-keyboard.add_vkpay_button(hash=config_values["VK_PAY_HASH"])
 
 """ 
 TODO: джерри укусить
@@ -212,26 +203,3 @@ for event in longpoll.listen():
             callback_to_message(event, random.choice(stuffy_answers), form_link(of_id, of_name), form_link(to_id, to_name), pool=stuffy_pool)
         if "Джерри помощь" in str(event):
                 menu(event)
-
-
-# for event in Lslongpoll.listen():
-#     if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.text:
-#         print("New event!!!")
-#         vars1 = ['Привет', 'Ку', 'Хай', 'Хеллоу']
-#         if event.text in vars1:
-#             if event.from_user:
-#                 Lsvk.messages.send(
-#                     user_id = event.user_id,
-#                     message = 'Привет)',
-#                     random_id = get_random_id()
-#                     )
-#         vars2 = ['Клавиатура', 'клавиатура']
-#         if event.text in vars2:
-#             if event.from_user:
-#                 Lsvk.messages.send(
-#                     user_id = event.user_id,
-#                     random_id = get_random_id(),
-#                     keyboard = keyboard.get_keyboard(),
-#                     message = 'Держи'
-#                     )
-
